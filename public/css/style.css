@@ -1,0 +1,119 @@
+
+#video-list .panel-body{
+    padding-left: 0px;
+    
+}
+
+.video-image-mask {
+    width: 145px;
+    height: 100px;
+    overflow: hidden;
+}
+
+.video-image-mask .video-image {
+    width:100%;
+}
+
+.video-title{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.video-title a{
+    color:#444;
+}
+
+.btn-filter {
+    display:block;
+    margin-top: 5px;
+}
+
+#video-player {
+    width: 600px;
+    height: 600px;
+    overflow: hidden;
+}
+
+
+body {
+  margin: 0;
+  /*background: #000; */
+  
+}
+#bgvid { 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    transform: translateX(-50%) translateY(-50%);
+ background: '/images/Rainy_Street.jpg' no-repeat;
+  background-size: cover;
+  transition: 1s opacity;
+}
+.stopfade { 
+   opacity: .5;
+}
+
+#polina { 
+  /*font-family: Agenda-Light, Agenda Light, Agenda, Arial Narrow, sans-serif;*/
+  font-family: 'Lato';
+  font-weight:100; 
+  background: rgba(0,0,0,0.3);
+  color: white;
+  padding: 2rem;
+  width: 33%;
+  margin:2rem;
+  float: center;
+  font-size: 2.2rem;
+}
+
+h1 {
+  font-size: 6rem;
+  text-transform: uppercase;
+  margin-top: 0;
+  letter-spacing: .3rem;
+  color: rgb(65, 193, 244);
+}
+#polina button { 
+  display: block;
+  width: 80%;
+  padding: .4rem;
+  border: none; 
+  margin: 1rem auto; 
+  font-size: 2.3rem;
+  /*background: rgba(255,255,255,0.23);*/
+  background: rgb(66, 155, 244);
+  color: #fff;
+  border-radius: 5px; 
+  cursor: pointer;
+  transition: .3s background;
+}
+#polina button:hover { 
+   background: rgba(0,0,0,0.5);
+}
+
+#polina a {
+  display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  /*background:rgba(0,0,0,0.5);*/
+  padding: .5rem;
+  transition: .6s background; 
+}
+
+@media screen and (max-width: 500px) { 
+  div{width:70%;} 
+}
+@media screen and (max-device-width: 800px) {
+  html { background: '/images/Rainy_Street.jpg' #000 no-repeat center center fixed; }
+  #bgvid { display: none; }
+}
+
+
+
+
+
