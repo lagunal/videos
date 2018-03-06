@@ -3,8 +3,7 @@
 @section('content')
 <div class="col-md-11 col-md-offset-1">
     <h2>{{ $video->title }}</h2>
-    <hr/>
-    
+
     <div class="col-md-8">
         <!--video-->
         <video controls id="video-player">
@@ -16,7 +15,7 @@
         <div class="panel panel-default video-data">
             <div class="panel-heading">
                 <div class="panel-title">
-                    Uploaded by <strong>{{ $video->user->name . ' ' . $video->user->surname }}</strong> {{ FormatTime::LongTimeFilter($video->created_at) . ' ago.' }}
+                    Published by <strong><a href="{{ route('userChannel', ['user_id' => $video->user->id]) }}">{{ $video->user->name . ' ' . $video->user->surname }}</a></strong> {{ FormatTime::LongTimeFilter($video->created_at) . ' ago.' }}
                 </div>
             </div> 
             <div class="panel-body">

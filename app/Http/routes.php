@@ -90,6 +90,15 @@ Route::get('/delete-comment/{comment_id}', array(
     'uses' => 'CommentController@delete'
 ));
 
+//*******Usuarios*****************
+Route::get('/channel/{user_id}', array(
+    'as' => 'userChannel',
+    'uses' => 'UserController@channel'
+));
+
+
+
+
 
 //*************Cache****************
 
