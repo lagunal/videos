@@ -1,6 +1,6 @@
 @if(isset($video->comments))
 <hr />
-<h4>Commments</h4>
+<h4>Comments</h4>
 <hr />
 @endif
 

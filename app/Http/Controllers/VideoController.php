@@ -20,7 +20,7 @@ class VideoController extends Controller
         return view('video.createVideo');
     }
     
-    
+    //function to save video
     public function saveVideo(Request $request){
         
         //validate form    
@@ -30,37 +30,37 @@ class VideoController extends Controller
             'video' => 'mimes:mp4'
         ]);
         
-        // video info
-        $video = new Video();
-        $user = \Auth::user();
-        $video->user_id = $user->id;
-        $video->title = $request->input('title');
-        $video->description = $request->input('description');
-        
-        //upload image
-        $image = $request->file('image');
-        if($image){
-            $image_path = time() . $image->getClientOriginalName();
-            \Storage::disk('images')->put($image_path, \File::get($image));
-            $video->image = $image_path;
+        try {
+                    // video info
+                    $video = new Video();
+                    $user = \Auth::user();
+                    $video->user_id = $user->id;
+                    $video->title = $request->input('title');
+                    $video->description = $request->input('description');
+                    
+                    //upload image
+                    $image = $request->file('image');
+                    if($image){
+                        $image_path = time() . $image->getClientOriginalName();
+                        \Storage::disk('images')->put($image_path, \File::get($image));
+                        $video->image = $image_path;
+                    }
+
+                    //upload video
+                    $video_file = $request->file('video');
+                    if($video_file){
+                        $video_path = time() . $video_file->getClientOriginalName();
+                        \Storage::disk('videos')->putFile($video_path, \File::get($video_file));
+                        $video->video_path = $video_path;
+                    }
+                    
+                    //save to DB
+                    $video->save();
+                    
+        } catch(\Exception $e){
+            $message = array('message' => 'Error trying to upload video!. Please Try again.');
+            return redirect()->route('home')->with($message);
         }
-//*********************************************************************************        
-        //upload video
-        $video_file = $request->file('video');
-        var_dump($video_file);
-        die();
-        if($video_file){
-            $video_path = time() . $video_file->getClientOriginalName();
-            //echo($image . '<br>');
-            //echo($video_file . '<br>');
-            //echo ($video_path);
-            //die();
-            \Storage::disk('videos')->put($video_path, \File::get($video_file));
-            $video->video_path = $video_path;
-        }
-        
-        //save to DB
-        $video->save();
         
         return redirect()->route('home')->with(array(
                  "message" => 'Video successfully uploaded!!'
@@ -89,6 +89,7 @@ class VideoController extends Controller
         return new Response($file,200);
     }
     
+    //function to delete video
     public function delete($video_id){
         $user = \Auth::user();
         $video = Video::find($video_id );
@@ -131,6 +132,7 @@ class VideoController extends Controller
         }
     }
     
+    //function to update video
     public function update($video_id, Request $request){
         
        //validate form    
@@ -140,42 +142,45 @@ class VideoController extends Controller
             'video' => 'mimes:mp4,wmv'
         ]);
         
-        $user = \Auth::user();
-        $video = Video::findOrFail($video_id);
-        $video->user_id = $user->id;
-        $video->title = $request->input('title');
-        $video->description = $request->input('description');
+        try{        
+                $user = \Auth::user();
+                $video = Video::findOrFail($video_id);
+                $video->user_id = $user->id;
+                $video->title = $request->input('title');
+                $video->description = $request->input('description');
         
-        //hidden inputs for delete old image/video
-        $hd_image = $request->input('hd_image');
-        $hd_video = $request->input('hd_video');
-        
-        //upload image
-        $image = $request->file('image');
-        
-        if($image){
-            $image_path = time() . $image->getClientOriginalName();
-            Storage::disk('images')->put($image_path, \File::get($image));
-            $video->image = $image_path;
-        }
-        
-        //upload video
-        $video_file = $request->file('video');
-        
-        if($video_file){
-            
-            $video_path = time() . $video_file->getClientOriginalName();
-            Storage::disk('videos')->put($video_path, \File::get($video_file));
-//************************************************
-            //delete old image/video files
-            \Storage::disk('images')->delete($hd_image);
-            //\Storage::disk('videos')->delete($hd_video);
-            
-            $video->video_path = $video_path;
-            
-        }
+                //upload image
+                $image = $request->file('image');
+                
+                if($image){
+                    //delete old image file
+                    Storage::disk('images')->delete($video->image);
 
-        $video->update();
+                    $image_path = time() . $image->getClientOriginalName();
+                    Storage::disk('images')->put($image_path, \File::get($image));
+                    $video->image = $image_path;
+                    
+                }
+                
+                //upload video
+                $video_file = $request->file('video');
+                
+                if($video_file){
+                    //delete old video file
+                    Storage::disk('videos')->delete($video->video_path);
+                    
+                    $video_path = time() . $video_file->getClientOriginalName();
+                    Storage::disk('videos')->put($video_path, \File::get($video_file));
+                    $video->video_path = $video_path;
+                    
+                }
+        
+                $video->update();
+        }
+        catch(\Exception $e){
+                    $message = array('message' => 'Error trying to updating video!. Please Try again.');
+                    return redirect()->route('home')->with($message);
+        }
         
         return redirect()->route('home')->with(array(
             'message' => 'video updated successfully'

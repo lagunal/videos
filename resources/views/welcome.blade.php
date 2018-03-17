@@ -36,8 +36,8 @@
 </video>
 <div id="polina">
     <h1>Videos App</h1>
-    <p>Powered by Ludwing Laguna
-    <p>Aenean pharetra convallis pellentesque. Vestibulum et metus lectus. Nunc consectetur, ipsum in viverra eleifend, erat erat ultricies felis, at ultricies mi massa eu ligula. Suspendisse in justo dapibus metus sollicitudin ultrices id sed nisl.</p>
+    <br />
+    <p style="text-align:center;">Upload your favorites videos and create your own channel</p>
     <button><a href="{{ url('/home') }}">Browse Videos</a></button>
 </div>
 

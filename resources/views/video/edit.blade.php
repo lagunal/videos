@@ -18,8 +18,7 @@
                      </ul>
                  </div>
                @endif
-               <input type="hidden" id="hd_image" name="hd_image" value="{{ $video->image }}" />
-               <input type="hidden" id="hd_video" name="hd_video" value="{{ $video->video_path }}" />
+
                <div class="form-group">
                    <label for="title">Title</label>
                    <input type="text" class="form-control" id="title" name="title" value="{{$video->title}}"/>
